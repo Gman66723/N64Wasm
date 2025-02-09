@@ -32,12 +32,11 @@
             border-top: 0px;
         }
 
-        .lightpurple {
+        .start-z-button {
             background-color: rgb(189, 174, 173);
         }
 
-        .darkpurple {
-            background-color: rgb(238, 21, 21);
+        .b-a-button {
             background-color: rgb(199, 199, 230);
         }
 
@@ -64,14 +63,89 @@
             height:21px;
             width:21px;
         }
+        .touchsurface {
+            color: lightgray;
+            position: absolute;
+            width: 100%;
+            height: 800px;
+        }
+
+        :root {
+            --bg-color: white;
+            --text-color: black;
+            --button-bg: rgb(189, 174, 173);
+            --button-text: black;
+            --secondary-button-bg: rgb(199, 199, 230) !important;
+            --touchsurface-bg: white;
+            --touchsurface-text: lightgray;
+            --modal-bg: white;
+        }
+
+        body.light-mode {
+            --bg-color: white !important;
+            --text-color: black !important;
+            --button-bg: rgb(189, 174, 173) !important;
+            --button-text: black !important;
+            --secondary-button-bg: rgb(199, 199, 230) !important;
+            --touchsurface-bg: white !important;
+            --touchsurface-text: lightgray !important;
+            --modal-bg: white !important;
+        }
+
         @media (prefers-color-scheme: dark) {
-            body {
-                background-color: rgb(20, 20, 20);
-            }
-            h1, a, .github-logo, .github-link, .github-link:hover, svg {
-                color: white;
+            :root {
+                --bg-color: rgb(20, 20, 20);
+                --text-color: white;
+                --button-bg: rgb(42, 42, 42);
+                --button-text: white;
+                --secondary-button-bg: rgb(80, 80, 80) !important;
+                --touchsurface-bg: rgb(20, 20, 20);
+                --touchsurface-text: rgb(72, 72, 72);
+                --modal-bg: rgb(20, 20, 20);
             }
         }
+
+        body.dark-mode {
+            --bg-color: rgb(20, 20, 20) !important;
+            --text-color: white !important;
+            --button-bg: rgb(42, 42, 42) !important;
+            --button-text: white !important;
+            --secondary-button-bg: rgb(80, 80, 80) !important;
+            --touchsurface-bg: rgb(20, 20, 20) !important;
+            --touchsurface-text: rgb(72, 72, 72) !important;
+            --modal-bg: rgb(20, 20, 20) !important;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        h1, a, .github-logo, .github-link, .github-link:hover, 
+        svg, label, th, input, ul {
+            color: var(--text-color);
+        }
+
+        .start-z-button {
+            color: var(--button-text);
+            background-color: var(--button-bg);
+        }
+
+        .b-a-button {
+            color: var(--button-text);
+            background-color: var(--secondary-button-bg);
+        }
+
+        .touchsurface, .nav-link.active:hover {
+            color: var(--touchsurface-text);
+            background-color: var(--touchsurface-bg);
+        }
+
+        .modal-content, .form-control, .form-control:focus, .form-control:disabled {
+            background-color: var(--modal-bg);
+            color: var(--text-color);
+        }
+
     </style>
 </head>
 
@@ -286,12 +360,12 @@
             <table style="width: 100%;" cellpadding=0 cellspacing=0>
                 <tr>
                     <td style="border-right: 1px solid rgb(72,72,72);width:50%;">
-                        <div id="mobileStart" class="lightpurple" rv-class-buttonhold="data.inputController.MobileStart">
+                        <div id="mobileStart" class="start-z-button" rv-class-buttonhold="data.inputController.MobileStart">
                             Start
                         </div>
                     </td>
                     <td>
-                    <div id="mobileSelect" class="lightpurple" rv-class-buttonhold="data.inputController.MobileSelect">
+                    <div id="mobileSelect" class="start-z-button" rv-class-buttonhold="data.inputController.MobileSelect">
                         <span rv-if="data.useZasCMobile | ev '==false'">Z</span>
                         <span rv-if="data.useZasCMobile | ev '==true'">C (Hold)</span>
                     </div>
@@ -299,12 +373,12 @@
                 </tr>
                 <tr>
                     <td style="border-right: 1px solid rgb(72,72,72);">
-                        <div id="mobileB" class="darkpurple" rv-class-buttonhold="data.inputController.MobileB">
+                        <div id="mobileB" class="b-a-button" rv-class-buttonhold="data.inputController.MobileB">
                             B
                         </div>
                     </td>
                     <td>
-                        <div id="mobileA" class="darkpurple" rv-class-buttonhold="data.inputController.MobileA">
+                        <div id="mobileA" class="b-a-button" rv-class-buttonhold="data.inputController.MobileA">
                             A
                         </div>
                     </td>
@@ -316,7 +390,7 @@
                 </div>
             </div> -->
             <div style="margin-left: auto;margin-right: auto;width: 100%;height: 800px;">
-                <div id="divTouchSurface" style="color: lightgray;position: absolute;width: 100%;height: 800px;">
+                <div id="divTouchSurface" class="touchsurface">
                     <div style="padding-top: 20px;" id="startDiv" style="-webkit-touch-callout: none; /* iOS Safari */
                     -webkit-user-select: none; /* Safari */
                      -khtml-user-select: none; /* Konqueror HTML */
@@ -897,6 +971,13 @@
                                 <label class="form-check-label" style="margin-left: 26px;">
                                     <input type="checkbox" class="form-check-input" rv-checked="data.useVBOTemp">
                                     Use Vertex Buffer Objects (may improve performance)
+                                </label>
+                            </div>
+
+                            <div class="mt-2">
+                                <label class="form-check-label" style="margin-left: 26px;">
+                                    <input type="checkbox" class="form-check-input" name="darkmode" rv-checked="data.darkModeTemp">
+                                    Dark mode
                                 </label>
                             </div>
 

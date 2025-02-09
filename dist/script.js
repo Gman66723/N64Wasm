@@ -66,6 +66,7 @@ class MyClass {
             forceAngry: false,
             ricePlugin: false,
             useVBO: false,
+            darkMode: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
             remapPlayer1: true,
             remapOptions: false,
             remapGameshark: false,
@@ -1273,6 +1274,7 @@ class MyClass {
         this.setFromLocalStorage('n64wasm-forceAngry','forceAngry');
         this.setFromLocalStorage('n64wasm-ricePlugin','ricePlugin');
         this.setFromLocalStorage('n64wasm-useVBO','useVBO');
+        this.setFromLocalStorage('n64wasm-darkMode','darkMode');
 
     }
 
@@ -1289,6 +1291,7 @@ class MyClass {
         this.rivetsData.forceAngry = this.rivetsData.pluginTemp == 'angry';
         this.rivetsData.ricePlugin = this.rivetsData.pluginTemp == 'rice';
         this.rivetsData.useVBO = this.rivetsData.useVBOTemp;
+        this.rivetsData.darkMode = this.rivetsData.darkModeTemp;
 
         this.setToLocalStorage('n64wasm-showfps','showFPS');
         this.setToLocalStorage('n64wasm-disableaudiosyncnew','disableAudioSync');
@@ -1301,7 +1304,8 @@ class MyClass {
         this.setToLocalStorage('n64wasm-forceAngry','forceAngry');
         this.setToLocalStorage('n64wasm-ricePlugin','ricePlugin');
         this.setToLocalStorage('n64wasm-useVBO','useVBO');
-        
+        this.setToLocalStorage('n64wasm-darkMode','darkMode');
+
     }
 
 
@@ -1323,6 +1327,7 @@ class MyClass {
         if (this.rivetsData.forceAngry) this.rivetsData.pluginTemp = 'angry';
         if (this.rivetsData.ricePlugin) this.rivetsData.pluginTemp = 'rice';
         this.rivetsData.useVBOTemp = this.rivetsData.useVBO;
+        this.rivetsData.darkModeTemp = this.rivetsData.darkMode;
 
         //start input loop
         if (!this.rivetsData.inputLoopStarted)
@@ -1387,6 +1392,7 @@ class MyClass {
             this.rivetsData.remapPlayer1 = false;
             this.rivetsData.remapOptions = true;
             this.rivetsData.remapGameshark = false;
+            this.listenForDarkModeCheckbox();
         }
         if (id=='player1')
         {
@@ -1449,6 +1455,7 @@ class MyClass {
         this.rivetsData.settingMobileTemp = 'Auto';
         this.rivetsData.pluginTemp = 'glide';
         this.rivetsData.useVBOTemp = false;
+        this.rivetsData.darkModeTemp = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
 
     remapPressed() {
@@ -1608,7 +1615,18 @@ class MyClass {
     localCallback(){
     }
     
-    
+    // change mode on click
+    listenForDarkModeCheckbox(){
+        $(document).on("change", "input[name='darkmode']", function () {
+            if (this.checked) {
+                $("body").addClass("dark-mode");
+                $("body").removeClass("light-mode");
+            } else {
+                $("body").addClass("light-mode");
+                $("body").removeClass("dark-mode");
+            }
+        });
+    }
 }
 let myClass = new MyClass();
 window["myApp"] = myClass; //so that I can reference from EM_ASM
@@ -1631,3 +1649,14 @@ var script2 = document.createElement('script');
 script2.src = 'input_controller.js?v=' + rando2;
 document.getElementsByTagName('head')[0].appendChild(script2);
 
+$(document).ready(function() {
+    // attempt to grab from settings, fall back to client preference
+    const isDarkModeEnabled = localStorage.getItem('n64wasm-darkMode') ??
+    (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches).toString();
+
+    if (isDarkModeEnabled == "true"){
+        $("body").addClass("dark-mode");
+    } else {
+        $("body").addClass("light-mode");
+    }
+});
