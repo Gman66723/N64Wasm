@@ -66,7 +66,7 @@ class MyClass {
             forceAngry: false,
             ricePlugin: false,
             useVBO: false,
-            darkMode: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
+            darkMode: false,
             remapPlayer1: true,
             remapOptions: false,
             remapGameshark: false,
@@ -1263,6 +1263,7 @@ class MyClass {
 
     retrieveSettings(){
         this.loadCheats();
+        this.loadDarkModeSettings();
         this.setFromLocalStorage('n64wasm-showfps','showFPS');
         this.setFromLocalStorage('n64wasm-disableaudiosyncnew','disableAudioSync');
         this.setFromLocalStorage('n64wasm-swapSticks','swapSticks');
@@ -1376,6 +1377,18 @@ class MyClass {
             }
         }catch(err){}
     }
+    
+    loadDarkModeSettings(){
+        // attempt to grab from settings, fall back to client preference
+        const isDarkModeEnabled = localStorage.getItem('n64wasm-darkMode') ??
+        (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches).toString();
+
+        if (isDarkModeEnabled == "true"){
+            $("body").addClass("dark-mode");
+        } else {
+            $("body").addClass("light-mode");
+        }
+    }
 
     saveCheats(){
         localStorage.setItem('n64wasm-cheats',JSON.stringify(this.rivetsData.cheats));
@@ -1392,7 +1405,6 @@ class MyClass {
             this.rivetsData.remapPlayer1 = false;
             this.rivetsData.remapOptions = true;
             this.rivetsData.remapGameshark = false;
-            this.listenForDarkModeCheckbox();
         }
         if (id=='player1')
         {
@@ -1649,14 +1661,4 @@ var script2 = document.createElement('script');
 script2.src = 'input_controller.js?v=' + rando2;
 document.getElementsByTagName('head')[0].appendChild(script2);
 
-$(document).ready(function() {
-    // attempt to grab from settings, fall back to client preference
-    const isDarkModeEnabled = localStorage.getItem('n64wasm-darkMode') ??
-    (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches).toString();
-
-    if (isDarkModeEnabled == "true"){
-        $("body").addClass("dark-mode");
-    } else {
-        $("body").addClass("light-mode");
-    }
-});
+myClass.listenForDarkModeCheckbox();
