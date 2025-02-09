@@ -41,7 +41,7 @@
         }
 
         .buttonhold {
-            background-color: lightsalmon!important;
+            background-color: lightsalmon;
         }
         
         .nav-tabs .nav-item.show .nav-link,
@@ -70,84 +70,48 @@
             height: 800px;
         }
 
-        :root {
-            --bg-color: white;
-            --text-color: black;
-            --button-bg: rgb(189, 174, 173);
-            --button-text: black;
-            --secondary-button-bg: rgb(199, 199, 230) !important;
-            --touchsurface-bg: white;
-            --touchsurface-text: lightgray;
-            --modal-bg: white;
-        }
-
-        body.light-mode {
-            --bg-color: white !important;
-            --text-color: black !important;
-            --button-bg: rgb(189, 174, 173) !important;
-            --button-text: black !important;
-            --secondary-button-bg: rgb(199, 199, 230) !important;
-            --touchsurface-bg: white !important;
-            --touchsurface-text: lightgray !important;
-            --modal-bg: white !important;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-color: rgb(20, 20, 20);
-                --text-color: white;
-                --button-bg: rgb(42, 42, 42);
-                --button-text: white;
-                --secondary-button-bg: rgb(80, 80, 80) !important;
-                --touchsurface-bg: rgb(20, 20, 20);
-                --touchsurface-text: rgb(72, 72, 72);
-                --modal-bg: rgb(20, 20, 20);
-            }
-        }
-
         body.dark-mode {
-            --bg-color: rgb(20, 20, 20) !important;
-            --text-color: white !important;
-            --button-bg: rgb(42, 42, 42) !important;
-            --button-text: white !important;
-            --secondary-button-bg: rgb(80, 80, 80) !important;
-            --touchsurface-bg: rgb(20, 20, 20) !important;
-            --touchsurface-text: rgb(72, 72, 72) !important;
-            --modal-bg: rgb(20, 20, 20) !important;
+            background-color: rgb(20, 20, 20);
+            color: white;
         }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-        }
+        .dark-mode {
+            #menuDiv {
+                color: black;
+            }
 
-        h1, a, .github-logo, .github-link, .github-link:hover, 
-        svg, label, th, input, ul {
-            color: var(--text-color);
-        }
+            h1, a, .github-logo, .github-link, .github-link:hover, 
+            svg, label, th, input, ul {
+                color: white;
+            }
 
-        .start-z-button {
-            color: var(--button-text);
-            background-color: var(--button-bg);
-        }
+            .modal-content, .form-control, .form-control:focus, .form-control:disabled {
+                background-color: rgb(20, 20, 20);
+                color: white;
+            }
 
-        .b-a-button {
-            color: var(--button-text);
-            background-color: var(--secondary-button-bg);
-        }
+            .modal-content{
+                border: 3px solid white;
+            }
 
-        .touchsurface, .nav-link.active:hover {
-            color: var(--touchsurface-text);
-            background-color: var(--touchsurface-bg);
-        }
+            .start-z-button {
+                color: white;
+                background-color: rgb(42, 42, 42);
+            }
 
-        .modal-content, .form-control, .form-control:focus, .form-control:disabled {
-            background-color: var(--modal-bg);
-            color: var(--text-color);
-        }
+            .b-a-button {
+                color: white;
+                background-color: rgb(80, 80, 80);
+            }
 
-        #menuDiv {
-            color: black;
+            .touchsurface, .nav-link.active:hover {
+                color: rgb(72, 72, 72);
+                background-color: rgb(20, 20, 20);
+            }
+            
+            .buttonhold {
+                background-color: darkslategray;
+            }
         }
 
     </style>
@@ -1096,7 +1060,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer" style="padding-top: 0;" rv-hide="data.remapWait">
+                <div class="modal-footer" style="padding-top: 10px;" rv-hide="data.remapWait">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" onclick="myApp.restoreDefaultKeymappings()" class="btn btn-primary">Restore Defaults</button>
                     <button type="button" class="btn btn-primary" onclick="myApp.saveRemap()">Save changes</button>
