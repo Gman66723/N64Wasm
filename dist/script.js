@@ -1467,7 +1467,7 @@ class MyClass {
         this.rivetsData.settingMobileTemp = 'Auto';
         this.rivetsData.pluginTemp = 'glide';
         this.rivetsData.useVBOTemp = false;
-        this.rivetsData.darkModeTemp = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        this.rivetsData.darkModeTemp = false;
     }
 
     remapPressed() {
