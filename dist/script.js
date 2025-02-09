@@ -66,7 +66,7 @@ class MyClass {
             forceAngry: false,
             ricePlugin: false,
             useVBO: false,
-            darkMode: false,
+            darkMode: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
             remapPlayer1: true,
             remapOptions: false,
             remapGameshark: false,
@@ -1263,7 +1263,6 @@ class MyClass {
 
     retrieveSettings(){
         this.loadCheats();
-        this.loadDarkModeSettings();
         this.setFromLocalStorage('n64wasm-showfps','showFPS');
         this.setFromLocalStorage('n64wasm-disableaudiosyncnew','disableAudioSync');
         this.setFromLocalStorage('n64wasm-swapSticks','swapSticks');
@@ -1377,18 +1376,6 @@ class MyClass {
             }
         }catch(err){}
     }
-    
-    loadDarkModeSettings(){
-        // attempt to grab from settings, fall back to client preference
-        const isDarkModeEnabled = localStorage.getItem('n64wasm-darkMode') ??
-        (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches).toString();
-
-        if (isDarkModeEnabled == "true"){
-            $("body").addClass("dark-mode");
-        } else {
-            $("body").addClass("light-mode");
-        }
-    }
 
     saveCheats(){
         localStorage.setItem('n64wasm-cheats',JSON.stringify(this.rivetsData.cheats));
@@ -1467,7 +1454,7 @@ class MyClass {
         this.rivetsData.settingMobileTemp = 'Auto';
         this.rivetsData.pluginTemp = 'glide';
         this.rivetsData.useVBOTemp = false;
-        this.rivetsData.darkModeTemp = false;
+        this.rivetsData.darkModeTemp = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
 
     remapPressed() {
@@ -1630,12 +1617,11 @@ class MyClass {
     // change mode on click
     listenForDarkModeCheckbox(){
         $(document).on("change", "input[name='darkmode']", function () {
+            console.log('clicked');
             if (this.checked) {
-                $("body").addClass("dark-mode");
-                $("body").removeClass("light-mode");
+                document.documentElement.dataset.darkmode = true;
             } else {
-                $("body").addClass("light-mode");
-                $("body").removeClass("dark-mode");
+                document.documentElement.removeAttribute("data-darkmode");
             }
         });
     }
