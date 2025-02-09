@@ -41,7 +41,7 @@
         }
 
         .buttonhold {
-            background-color: lightsalmon;
+            background-color: lightsalmon!important;
         }
         
         .nav-tabs .nav-item.show .nav-link,
@@ -144,6 +144,10 @@
         .modal-content, .form-control, .form-control:focus, .form-control:disabled {
             background-color: var(--modal-bg);
             color: var(--text-color);
+        }
+
+        #menuDiv {
+            color: black;
         }
 
     </style>
@@ -332,8 +336,7 @@
     </div>
 
     <!-- Mobile UX -->
-    <div id="mobileButtons" style="display: none;text-align: center;background: white;
-                   padding-top: 20px;padding-bottom: 20px;">
+    <div id="mobileButtons" style="display: none;text-align: center;padding-top: 20px;padding-bottom: 20px;">
         <div style="margin-bottom: 10px;">
             <button class="btn btn-primary mt-2 mb-2" onclick="myApp.newRom()" >New Rom</button>
             <button rv-if="data.loggedIn | ev '==true'" class="btn btn-primary mt-2 mb-2" onclick="myApp.saveCloud()" >Save Cloud</button>
