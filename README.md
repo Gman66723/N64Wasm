@@ -9,6 +9,7 @@ Supports the following features -
 - Import/Export Save Files (see settings.js)
 - Zoom Controls
 - Full Screen
+- Dark Mode
 - Audio Support
 - Cloud Save States (Host your own server)
 - Multiple Controller Support
