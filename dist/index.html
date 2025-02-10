@@ -16,18 +16,16 @@
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.10.0/nipplejs.min.js"></script>
     <script>
-        const setTheme = (theme) => {
-          theme ??= localStorage.getItem('n64wasm-darkMode') ||
-            (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches).toString();
-          
-          if (theme == "true") {
-            document.documentElement.dataset.darkmode = true;
-          } else {
-            document.documentElement.removeAttribute("data-theme");
-          }
-        };
-        
-        setTheme();
+        // This check needs to be at the top in order to avoid the flash when the theme is swapped.
+        // If we find the user's system settings theme we default to that
+        // The attribute is applied to the document's top most element
+        function getSystemDarkMode(){
+            return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        }
+
+        if (localStorage.getItem('n64wasm-darkMode') == "true" || getSystemDarkMode()) {
+                document.documentElement.dataset.darkmode = true;
+        }
     </script>
     <style>
         input[type="file"] {
@@ -85,14 +83,10 @@
             height: 800px;
         }
 
-        body.dark-mode {
-            background-color: rgb(20, 20, 20);
-            color: white;
-        }
-
         [data-darkmode="true"] {
             body {
                 background-color: black;
+                color: white;
             }
             #menuDiv {
                 color: black;

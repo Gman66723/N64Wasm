@@ -66,7 +66,7 @@ class MyClass {
             forceAngry: false,
             ricePlugin: false,
             useVBO: false,
-            darkMode: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches,
+            darkMode: getSystemDarkMode(),
             remapPlayer1: true,
             remapOptions: false,
             remapGameshark: false,
@@ -1454,7 +1454,7 @@ class MyClass {
         this.rivetsData.settingMobileTemp = 'Auto';
         this.rivetsData.pluginTemp = 'glide';
         this.rivetsData.useVBOTemp = false;
-        this.rivetsData.darkModeTemp = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        this.rivetsData.darkModeTemp = getSystemDarkMode();
     }
 
     remapPressed() {
@@ -1617,7 +1617,6 @@ class MyClass {
     // change mode on click
     listenForDarkModeCheckbox(){
         $(document).on("change", "input[name='darkmode']", function () {
-            console.log('clicked');
             if (this.checked) {
                 document.documentElement.dataset.darkmode = true;
             } else {
