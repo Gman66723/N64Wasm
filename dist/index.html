@@ -23,8 +23,9 @@
             return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
         }
 
-        if (localStorage.getItem('n64wasm-darkMode') == "true" || getSystemDarkMode()) {
-                document.documentElement.dataset.darkmode = true;
+        const darkMode = localStorage.getItem('n64wasm-darkMode');
+        if ((darkMode !== null ? darkMode === "true" : getSystemDarkMode())) {
+            document.documentElement.dataset.darkmode = true;
         }
     </script>
     <style>
